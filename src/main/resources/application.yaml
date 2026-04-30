@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: cardmarket-shipping
+server:
+  port: 8081
+
+postnord:
+  apiKey: ${POSTNORD_API_KEY}
+  issuerCode: ${POSTNORD_ISSUER_CODE}
+  customerNumber: ${POSTNORD_CUSTOMER_NUMBER}
+
+  serviceCodes:
+     domestic: SERVICE CODE
+     international: SERVICE CODE
+
+  sender:
+    name: ${SENDER_NAME}
+    street: ${SENDER_STREET}
+    zipCode: ${SENDER_ZIP_CODE}
+    city: ${SENDER_CITY}
+
