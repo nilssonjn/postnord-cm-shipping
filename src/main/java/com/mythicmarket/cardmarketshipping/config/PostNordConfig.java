@@ -12,9 +12,10 @@ public class PostNordConfig {
     private String apiKey;
     private String issuerCode;
     private String customerNumber;
-
     private ServiceCodes serviceCodes;
     private Sender sender;
+    private boolean testMode;
+    private String defaultPackageType;
 
     @Data
     public static class ServiceCodes {
@@ -28,6 +29,7 @@ public class PostNordConfig {
         private String street;
         private String zipCode;
         private String city;
+        private String countryCode;
     }
 
 }

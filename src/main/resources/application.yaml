@@ -13,9 +13,12 @@ postnord:
      domestic: SERVICE CODE
      international: SERVICE CODE
 
+  defaultPackageType: EN # PostNord package type code EN = envelope/letter
+  testMode: true # set to false for production
+
   sender:
     name: ${SENDER_NAME}
     street: ${SENDER_STREET}
     zipCode: ${SENDER_ZIP_CODE}
     city: ${SENDER_CITY}
-
+    countryCode: "SE"
