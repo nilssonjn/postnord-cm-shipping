@@ -9,6 +9,8 @@ postnord:
   issuerCode: ${POSTNORD_ISSUER_CODE}
   customerNumber: ${POSTNORD_CUSTOMER_NUMBER}
 
+  url: ${POSTNORD_URL}
+
   serviceCodes:
      domestic: SERVICE CODE
      international: SERVICE CODE

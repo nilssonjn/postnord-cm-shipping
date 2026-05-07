@@ -16,6 +16,7 @@ public class PostNordConfig {
     private Sender sender;
     private boolean testMode;
     private String defaultPackageType;
+    private String url;
 
     @Data
     public static class ServiceCodes {
