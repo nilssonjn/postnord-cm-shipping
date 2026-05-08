@@ -10,6 +10,7 @@ postnord:
   customerNumber: ${POSTNORD_CUSTOMER_NUMBER}
 
   url: ${POSTNORD_URL}
+  paperSize: "&paperSize=A4" # PostNord label paper size, A4 is the default
 
   serviceCodes:
      domestic: SERVICE CODE

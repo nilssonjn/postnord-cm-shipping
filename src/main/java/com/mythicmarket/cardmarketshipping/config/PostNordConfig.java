@@ -17,6 +17,7 @@ public class PostNordConfig {
     private boolean testMode;
     private String defaultPackageType;
     private String url;
+    private String paperSize;
 
     @Data
     public static class ServiceCodes {
