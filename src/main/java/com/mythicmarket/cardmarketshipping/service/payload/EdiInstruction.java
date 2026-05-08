@@ -11,7 +11,7 @@ public record EdiInstruction(
     public record Shipment(
             Parties parties,
             Service service,
-            GoodsItem goodsItem
+            List<GoodsItem> goodsItem
     ) {
     }
 
@@ -51,6 +51,12 @@ public record EdiInstruction(
     public record GoodsItem(String packageTypeCode, List<Item> items) {
     }
 
-    public record Item(String itemId, double grossWeight) {
+    public record ItemIdentification(String itemId) {
+    }
+
+    public record GrossWeight(double value, String unit) {
+    }
+
+    public record Item(ItemIdentification itemIdentification, GrossWeight grossWeight) {
     }
 }
