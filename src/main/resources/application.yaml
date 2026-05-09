@@ -13,8 +13,12 @@ postnord:
   paperSize: "&paperSize=A4" # PostNord label paper size, A4 is the default
 
   serviceCodes:
-     domestic: SERVICE CODE
-     international: SERVICE CODE
+    "1:a-klass brev inrikes": "LX"
+    "Varubrev Förstaklass": "86"
+    "Brev utrikes förstaklass": "UX"
+    "Tracked Letter": "34"
+    "Rek": "RR"
+
 
   defaultPackageType: EN # PostNord package type code EN = envelope/letter
   testMode: true # set to false for production

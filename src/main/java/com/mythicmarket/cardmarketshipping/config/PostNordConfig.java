@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Map;
+
 @Configuration
 @ConfigurationProperties(prefix = "postnord")
 @Data
@@ -12,18 +14,12 @@ public class PostNordConfig {
     private String apiKey;
     private String issuerCode;
     private String customerNumber;
-    private ServiceCodes serviceCodes;
     private Sender sender;
     private boolean testMode;
     private String defaultPackageType;
     private String url;
     private String paperSize;
-
-    @Data
-    public static class ServiceCodes {
-        private String domestic;
-        private String international;
-    }
+    private Map<String, String> serviceCodes;
 
     @Data
     public static class Sender {
