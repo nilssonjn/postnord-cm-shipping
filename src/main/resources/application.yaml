@@ -13,11 +13,21 @@ postnord:
   paperSize: "&paperSize=A4" # PostNord label paper size, A4 is the default
 
   serviceCodes:
-    "1:a-klass brev inrikes": "LX"
-    "Varubrev Förstaklass": "86"
-    "Brev utrikes förstaklass": "UX"
-    "Tracked Letter": "34"
-    "Rek": "RR"
+    "1:a-klass brev inrikes":
+      code: "LX"
+      addon:
+    "Varubrev Förstaklass":
+      code: "86"
+      addon:
+    "Brev utrikes förstaklass":
+      code: "UX"
+      addon:
+    "Tracked Letter":
+      code: "34"
+      addon:
+    "Rek":
+      code: "RR"
+      addon: "FB"
 
 
   defaultPackageType: EN # PostNord package type code EN = envelope/letter

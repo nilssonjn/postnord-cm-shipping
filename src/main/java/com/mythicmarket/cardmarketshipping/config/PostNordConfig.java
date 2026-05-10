@@ -19,7 +19,13 @@ public class PostNordConfig {
     private String defaultPackageType;
     private String url;
     private String paperSize;
-    private Map<String, String> serviceCodes;
+    private Map<String, ServiceEntry> serviceCodes;
+
+    @Data
+    public static class ServiceEntry {
+        private String code;
+        private String addon;
+    }
 
     @Data
     public static class Sender {
