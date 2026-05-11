@@ -9,8 +9,13 @@ postnord:
   issuerCode: ${POSTNORD_ISSUER_CODE}
   customerNumber: ${POSTNORD_CUSTOMER_NUMBER}
 
+  application:
+    applicationId: ${POSTNORD_APPLICATION_ID:}
+    name: "Cardmarket Shipping"
+    version: "1.0"
+
   url: ${POSTNORD_URL}
-  paperSize: "&paperSize=A4" # PostNord label paper size, A4 is the default
+  urlParams: "&paperSize=A4" # PostNord label paper size, A4 is the default
 
   serviceCodes:
     "1:a-klass brev inrikes":
@@ -27,8 +32,7 @@ postnord:
       addon:
     "Rek":
       code: "RR"
-      addon: "FB"
-
+      addon: "FE"
 
   defaultPackageType: EN # PostNord package type code EN = envelope/letter
   testMode: true # set to false for production
