@@ -4,10 +4,17 @@ import java.util.List;
 
 public record EdiInstruction(
         String messageDate,
+        String messageFunction,
+        String messageId,
         String updateIndicator,
+        Application application,
         boolean testIndicator,
         List<Shipment> shipment
 ) {
+
+    public record Application(Integer applicationId, String name, String version) {
+    }
+
     public record Shipment(
             Parties parties,
             Service service,
@@ -28,7 +35,7 @@ public record EdiInstruction(
     public record Consignee(PartyDetails party) {
     }
 
-    public record PartyIdentification(String partyId) {
+    public record PartyIdentification(String partyId, String partyIdType) {
     }
 
     public record PartyDetails(NameIdentification nameIdentification, Address address) {
@@ -45,7 +52,7 @@ public record EdiInstruction(
     ) {
     }
 
-    public record Service(String basicServiceCode) {
+    public record Service(String basicServiceCode, List<String> additionalServiceCode) {
     }
 
     public record GoodsItem(String packageTypeCode, List<Item> items) {

@@ -18,8 +18,16 @@ public class PostNordConfig {
     private boolean testMode;
     private String defaultPackageType;
     private String url;
-    private String paperSize;
+    private String urlParams;
     private Map<String, ServiceEntry> serviceCodes;
+    private Application application;
+
+    @Data
+    public static class Application {
+        private Integer applicationId;
+        private String name;
+        private String version;
+    }
 
     @Data
     public static class ServiceEntry {
