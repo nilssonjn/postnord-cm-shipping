@@ -10,7 +10,7 @@ postnord:
   customerNumber: ${POSTNORD_CUSTOMER_NUMBER}
 
   application:
-    applicationId: ${POSTNORD_APPLICATION_ID:}
+    applicationId: ${POSTNORD_APPLICATION_ID}
     name: "Cardmarket Shipping"
     version: "1.0"
 
@@ -18,21 +18,21 @@ postnord:
   urlParams: "&paperSize=A4" # PostNord label paper size, A4 is the default
 
   serviceCodes:
-    "1:a-klass brev inrikes":
-      code: "LX"
-      addon:
-    "Varubrev Förstaklass":
-      code: "86"
-      addon:
-    "Brev utrikes förstaklass":
+    "[1:a-klass brev inrikes]":
       code: "UX"
       addon:
-    "Tracked Letter":
+    "[Varubrev Förstaklass]":
+      code: "86"
+      addon:
+    "[Brev utrikes förstaklass]":
+      code: "UX"
+      addon:
+    "[Tracked Letter]":
       code: "34"
       addon:
-    "Rek":
+    "[Rek]":
       code: "RR"
-      addon: "FE"
+      addon:
 
   defaultPackageType: EN # PostNord package type code EN = envelope/letter
   testMode: true # set to false for production
