@@ -1,13 +1,16 @@
 package com.mythicmarket.cardmarketshipping.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
 public record LabelRequest(
-        String buyerName,
-        String street,
-        String postalCode,
-        String city,
-        String countryName,
-        String orderId,
-        int weightGrams,
-        String serviceType
+        @NotBlank String buyerName,
+        @NotBlank String street,
+        @NotBlank String postalCode,
+        @NotBlank String city,
+        @NotBlank String countryName,
+        @NotBlank String orderId,
+        @Positive int weightGrams,
+        @NotBlank String serviceType
 ) {
 }

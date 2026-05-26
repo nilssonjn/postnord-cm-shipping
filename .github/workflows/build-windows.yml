@@ -1,0 +1,55 @@
+name: Build Windows Exe
+
+on:
+  # Run manually from the Actions tab whenever you want a new build
+  workflow_dispatch:
+  # Also run automatically when you push a version tag (e.g. git tag v1.0.0 && git push --tags)
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      # Produces target/cardmarket-shipping.jar (fat JAR with embedded Tomcat)
+      - name: Build fat JAR
+        run: mvn package -DskipTests
+        shell: bash
+
+      # Bundles the JAR + a self-contained JRE into a Windows app image.
+      # No Java installation is required on the target PC.
+      - name: Package with jpackage
+        run: |
+          jpackage \
+            --input target \
+            --main-jar cardmarket-shipping.jar \
+            --name CardmarketShipping \
+            --app-version 1.0.0 \
+            --type app-image \
+            --java-options "-Dfile.encoding=UTF-8" \
+            --dest dist
+        shell: bash
+
+      # Zip the entire app folder so it can be downloaded as a single file
+      - name: Zip app image
+        run: Compress-Archive -Path dist\CardmarketShipping -DestinationPath CardmarketShipping-windows.zip
+        shell: pwsh
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CardmarketShipping-windows
+          path: CardmarketShipping-windows.zip
+          retention-days: 30
