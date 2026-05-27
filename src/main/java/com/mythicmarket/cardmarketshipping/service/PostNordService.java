@@ -9,10 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
 import java.util.Base64;
 
 @Service
@@ -22,7 +21,7 @@ public class PostNordService {
 
     private final PostNordConfig config;
     private final PostNordPayloadBuilder postNordPayloadBuilder;
-    private final RestTemplate restTemplate;
+    private final RestClient restClient;
 
     public byte[] generateLabel(LabelRequest labelRequest) {
         log.info("Generating label for orderId={}, serviceType={}", labelRequest.orderId(), labelRequest.serviceType());
@@ -38,23 +37,20 @@ public class PostNordService {
 
         String url = config.getUrl() + config.getApiKey() + config.getUrlParams();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        ResponseEntity<PostNordLabelResponse> response;
+        PostNordLabelResponse response;
         try {
-            response = restTemplate.exchange(
-                    URI.create(url),
-                    HttpMethod.POST,
-                    new HttpEntity<>(payload, headers),
-                    PostNordLabelResponse.class
-            );
+            response = restClient.post()
+                    .uri(url)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(payload)
+                    .retrieve()
+                    .body(PostNordLabelResponse.class);
         } catch (RestClientException e) {
             log.error("PostNord API call failed for orderId={}: {}", labelRequest.orderId(), e.getMessage());
             throw new IllegalStateException("PostNord API call failed - see logs for details.", e);
         }
 
-        String base64Pdf = extractBase64Pdf(response.getBody());
+        String base64Pdf = extractBase64Pdf(response);
         log.info("Label generated successfully for orderId={}", labelRequest.orderId());
         return Base64.getDecoder().decode(base64Pdf);
     }
