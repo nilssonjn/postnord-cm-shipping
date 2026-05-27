@@ -15,16 +15,16 @@ logging:
       max-history: 5
 
 postnord:
-  apiKey: ${POSTNORD_API_KEY}
-  issuerCode: ${POSTNORD_ISSUER_CODE}
-  customerNumber: ${POSTNORD_CUSTOMER_NUMBER}
+  apiKey: ${POSTNORD_API_KEY:}
+  issuerCode: ${POSTNORD_ISSUER_CODE:}
+  customerNumber: ${POSTNORD_CUSTOMER_NUMBER:}
 
   application:
-    applicationId: ${POSTNORD_APPLICATION_ID}
+    applicationId: ${POSTNORD_APPLICATION_ID:}
     name: "Cardmarket Shipping"
     version: "1.0"
 
-  url: ${POSTNORD_URL}
+  url: ${POSTNORD_URL:}
   urlParams: "&paperSize=A4" # PostNord label paper size, A4 is the default
 
   serviceCodes:
@@ -48,8 +48,8 @@ postnord:
   testMode: true # set to false for production
 
   sender:
-    name: ${SENDER_NAME}
-    street: ${SENDER_STREET}
-    zipCode: ${SENDER_ZIP_CODE}
-    city: ${SENDER_CITY}
+    name: ${SENDER_NAME:}
+    street: ${SENDER_STREET:}
+    zipCode: ${SENDER_ZIP_CODE:}
+    city: ${SENDER_CITY:}
     countryCode: "SE"
