@@ -41,6 +41,7 @@ jobs:
             --app-version 1.0.0 \
             --type app-image \
             --java-options "-Dfile.encoding=UTF-8" \
+            --win-console \
             --dest dist
         shell: bash
 
