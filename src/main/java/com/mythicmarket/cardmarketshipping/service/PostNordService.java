@@ -26,11 +26,18 @@ public class PostNordService {
     public byte[] generateLabel(LabelRequest labelRequest) {
         log.info("Generating label for orderId={}, serviceType={}", labelRequest.orderId(), labelRequest.serviceType());
 
-        ServiceEntry entry = config.getServiceCodes().get(labelRequest.serviceType());
+        String serviceType = labelRequest.serviceType();
+        if (config.getAliases() != null) {
+            serviceType = config.getAliases().getOrDefault(serviceType, serviceType);
+        }
+
+        ServiceEntry entry = config.getServiceCodes().get(serviceType);
         if (entry == null) {
+            log.warn("Unknown service type '{}' for orderId={} — check application.yaml serviceCodes map (or add an alias)",
+                    labelRequest.serviceType(), labelRequest.orderId());
             throw new IllegalArgumentException(
                     "Unknown service type: " + labelRequest.serviceType() +
-                            ". Check application.yaml serviceCodes map.");
+                            ". Check application.yaml serviceCodes map (or add an alias).");
         }
 
         EdiInstruction payload = postNordPayloadBuilder.build(labelRequest, entry);

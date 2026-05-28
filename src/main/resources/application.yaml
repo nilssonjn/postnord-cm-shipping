@@ -27,6 +27,13 @@ postnord:
   url: ${POSTNORD_URL:}
   urlParams: "&paperSize=A4" # PostNord label paper size, A4 is the default
 
+  # Maps incoming service type names (e.g. from Cardmarket) to canonical serviceCodes keys.
+  # Add new entries here as you encounter unrecognised service type names in the logs.
+  aliases:
+    "[Priority Letter]": "Brev utrikes förstaklass"
+    "[DHL Package size S]": "Rek"
+    "[Priority Letter (1:a-klassbrev)]": "1:a-klass brev inrikes"
+
   serviceCodes:
     "[1:a-klass brev inrikes]":
       code: "UX"

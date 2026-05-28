@@ -5,6 +5,8 @@ on:
   workflow_dispatch:
   # Also run automatically when you push a version tag (e.g. git tag v1.0.0 && git push --tags)
   push:
+    branches:
+      - main
     tags:
       - 'v*'
 

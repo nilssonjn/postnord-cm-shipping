@@ -23,6 +23,7 @@ public class PostNordConfig {
     private String defaultPackageType;
     private String url;
     private String urlParams;
+    private Map<String, String> aliases;
     private Map<String, ServiceEntry> serviceCodes;
     private Application application;
 
