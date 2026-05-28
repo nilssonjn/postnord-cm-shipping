@@ -25,7 +25,7 @@ postnord:
     version: "1.0"
 
   url: ${POSTNORD_URL:}
-  urlParams: "&paperSize=A4" # PostNord label paper size, A4 is the default
+  urlParams: "&labelType=standard" # ZPL label type: standard=105x190mm, small=75x105mm
 
   # Maps incoming service type names (e.g. from Cardmarket) to canonical serviceCodes keys.
   # Add new entries here as you encounter unrecognised service type names in the logs.
