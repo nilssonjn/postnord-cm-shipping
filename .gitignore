@@ -35,5 +35,5 @@ build/
 .DS_Store
 .env
 buttonMTG.md
-postnordResponse.json
-workflow.md
+curl.txt
+/logs/

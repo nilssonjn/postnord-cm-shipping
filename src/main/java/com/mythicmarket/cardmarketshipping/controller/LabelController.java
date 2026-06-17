@@ -5,7 +5,6 @@ import com.mythicmarket.cardmarketshipping.service.PostNordService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,14 +18,14 @@ public class LabelController {
 
     private final PostNordService postNordService;
 
-    @PostMapping(value = "/generate", produces = MediaType.APPLICATION_PDF_VALUE)
+    @PostMapping(value = "/generate", produces = "application/zpl")
     public ResponseEntity<byte[]> generate(@Valid @RequestBody LabelRequest request) {
-        byte[] pdf = postNordService.generateLabel(request);
+        byte[] label = postNordService.generateLabel(request);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"label-" + request.orderId() + ".pdf\"")
-                .body(pdf);
+                        "attachment; filename=\"label-" + request.orderId() + ".zpl\"")
+                .body(label);
     }
 
 }

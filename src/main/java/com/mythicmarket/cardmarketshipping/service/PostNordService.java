@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
-import java.util.Base64;
+import java.nio.charset.StandardCharsets;
 
 @Service
 @RequiredArgsConstructor
@@ -57,12 +57,12 @@ public class PostNordService {
             throw new IllegalStateException("PostNord API call failed - see logs for details.", e);
         }
 
-        String base64Pdf = extractBase64Pdf(response);
+        String labelData = extractBase64Label(response);
         log.info("Label generated successfully for orderId={}", labelRequest.orderId());
-        return Base64.getDecoder().decode(base64Pdf);
+        return labelData.getBytes(StandardCharsets.UTF_8);
     }
 
-    private String extractBase64Pdf(PostNordLabelResponse postnordLabelResponse) {
+    private String extractBase64Label(PostNordLabelResponse postnordLabelResponse) {
         if (postnordLabelResponse == null || postnordLabelResponse.labelPrintout()
                 == null || postnordLabelResponse.labelPrintout().isEmpty()) {
             log.error("Postnord did not return a label. Response body: {}", postnordLabelResponse);
