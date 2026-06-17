@@ -1,3 +1,7 @@
+app:
+  github-repo: nilssonjn/postnord-cm-shipping
+  update-check-enabled: true
+
 spring:
   config:
     import: optional:file:.env[.properties]
