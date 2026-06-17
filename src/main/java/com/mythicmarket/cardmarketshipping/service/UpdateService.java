@@ -60,7 +60,7 @@ public class UpdateService implements ApplicationRunner {
         }
         try {
             checkForUpdate();
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.warn("Update check failed: {}", e.getMessage());
         }
     }

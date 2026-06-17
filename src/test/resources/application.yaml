@@ -1,0 +1,3 @@
+app:
+  github-repo: nilssonjn/postnord-cm-shipping
+  update-check-enabled: false

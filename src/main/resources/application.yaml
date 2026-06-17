@@ -19,16 +19,16 @@ logging:
       max-history: 5
 
 postnord:
-  apiKey: ${POSTNORD_API_KEY:}
-  issuerCode: ${POSTNORD_ISSUER_CODE:}
-  customerNumber: ${POSTNORD_CUSTOMER_NUMBER:}
+  apiKey: ${POSTNORD_API_KEY}
+  issuerCode: ${POSTNORD_ISSUER_CODE}
+  customerNumber: ${POSTNORD_CUSTOMER_NUMBER}
 
   application:
-    applicationId: ${POSTNORD_APPLICATION_ID:}
+    applicationId: ${POSTNORD_APPLICATION_ID}
     name: "Cardmarket Shipping"
     version: "1.0"
 
-  url: ${POSTNORD_URL:}
+  url: ${POSTNORD_URL}
   urlParams: "&labelType=standard" # ZPL label type: standard=105x190mm, small=75x105mm
 
   # Maps incoming service type names (e.g. from Cardmarket) to canonical serviceCodes keys.
@@ -56,11 +56,11 @@ postnord:
       addon:
 
   defaultPackageType: EN # PostNord package type code EN = envelope/letter
-  testMode: ${POSTNORD_TEST_MODE:true} # set to false for production
+  testMode: ${POSTNORD_TEST_MODE} # set to false for production
 
   sender:
-    name: ${SENDER_NAME:}
-    street: ${SENDER_STREET:}
-    zipCode: ${SENDER_ZIP_CODE:}
-    city: ${SENDER_CITY:}
+    name: ${SENDER_NAME}
+    street: ${SENDER_STREET}
+    zipCode: ${SENDER_ZIP_CODE}
+    city: ${SENDER_CITY}
     countryCode: "SE"
