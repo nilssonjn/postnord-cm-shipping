@@ -36,3 +36,4 @@ build/
 .env
 buttonMTG.md
 curl.txt
+/logs/

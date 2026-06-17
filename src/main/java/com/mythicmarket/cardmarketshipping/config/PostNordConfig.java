@@ -38,12 +38,6 @@ public class PostNordConfig {
         checkProperty(customerNumber, "postnord.customer-number");
         checkProperty(url, "postnord.url");
 
-        if (application == null) {
-            log.warn("Missing config: postnord.application");
-        } else if (application.getApplicationId() == null) {
-            log.warn("Missing config: postnord.application.application-id");
-        }
-
         if (sender == null) {
             log.warn("Missing config: postnord.sender");
         } else {
