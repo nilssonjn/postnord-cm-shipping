@@ -66,8 +66,8 @@ postnord:
     countryCode: "SE"
 
 printer:
-  name: ${PRINTER_NAME}         # Windows printer name for USB (e.g. "ZDesigner ZD421-203dpi ZPL") — takes priority over host/port
-  host: ${PRINTER_HOST}         # Network printer IP — used only if printer.name is not set
+  name: ${PRINTER_NAME} # Windows printer name for USB (e.g. "ZDesigner ZD421-203dpi ZPL") — takes priority over host/port
+  host: ${PRINTER_HOST} # Network printer IP — used only if printer.name is not set
   port: ${PRINTER_PORT}
   enabled: ${PRINTER_ENABLED}
   connect-timeout-ms: ${PRINTER_CONNECT_TIMEOUT_MS}
