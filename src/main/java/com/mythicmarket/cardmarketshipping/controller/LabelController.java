@@ -31,7 +31,7 @@ public class LabelController {
         if (printerConfig.isEnabled()) {
             try {
                 printerService.print(label);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 log.error("Printing failed for order {} — label will still be downloaded", request.orderId(), e);
             }
         }

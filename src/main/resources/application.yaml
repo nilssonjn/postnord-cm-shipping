@@ -29,7 +29,7 @@ postnord:
     version: "1.0"
 
   url: ${POSTNORD_URL}
-  urlParams: "&labelType=standard" # ZPL label type: standard=105x190mm, small=75x105mm
+  urlParams: ${POSTNORD_URL_PARAMS}
 
   # Maps incoming service type names (e.g. from Cardmarket) to canonical serviceCodes keys.
   # Add new entries here as you encounter unrecognised service type names in the logs.
@@ -69,4 +69,4 @@ printer:
   host: ${PRINTER_HOST}
   port: ${PRINTER_PORT}
   enabled: ${PRINTER_ENABLED} # set false to disable printing (e.g. for testing without a printer)
-  connect-timeout-ms: 5000
+  connect-timeout-ms: ${PRINTER_CONNECT_TIMEOUT_MS}
