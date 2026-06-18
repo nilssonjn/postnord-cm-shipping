@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 @Slf4j
@@ -17,14 +18,17 @@ public class PrinterService {
     private final PrinterConfig printerConfig;
 
     public void print(byte[] zpl) {
-        try (Socket socket = new Socket(printerConfig.getHost(), printerConfig.getPort());
-             OutputStream out = socket.getOutputStream()) {
+        String host = printerConfig.getHost();
+        int port = printerConfig.getPort();
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress(host, port), printerConfig.getConnectTimeoutMs());
+            OutputStream out = socket.getOutputStream();
             out.write(zpl);
             out.flush();
-            log.info("ZPL sent to printer {}:{}", printerConfig.getHost(), printerConfig.getPort());
+            log.info("ZPL sent to printer {}:{}", host, port);
         } catch (IOException e) {
-            log.error("Failed to send ZPL to printer {}:{}", printerConfig.getHost(), printerConfig.getPort(), e);
-            throw new RuntimeException("Printer unreachable", e);
+            log.error("Failed to send ZPL to printer {}:{}", host, port, e);
+            throw new RuntimeException("Printer unreachable at %s:%d".formatted(host, port), e);
         }
     }
 

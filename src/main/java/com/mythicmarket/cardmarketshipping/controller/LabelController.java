@@ -6,6 +6,7 @@ import com.mythicmarket.cardmarketshipping.service.PostNordService;
 import com.mythicmarket.cardmarketshipping.service.PrinterService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/labels")
 @RequiredArgsConstructor
@@ -27,7 +29,11 @@ public class LabelController {
         byte[] label = postNordService.generateLabel(request);
 
         if (printerConfig.isEnabled()) {
-            printerService.print(label);
+            try {
+                printerService.print(label);
+            } catch (Exception e) {
+                log.error("Printing failed for order {} — label will still be downloaded", request.orderId(), e);
+            }
         }
 
         return ResponseEntity.ok()
