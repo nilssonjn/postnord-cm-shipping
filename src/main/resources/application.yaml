@@ -64,3 +64,8 @@ postnord:
     zipCode: ${SENDER_ZIP_CODE}
     city: ${SENDER_CITY}
     countryCode: "SE"
+
+printer:
+  host: ${PRINTER_HOST}
+  port: ${PRINTER_PORT}
+  enabled: ${PRINTER_ENABLED} # set false to disable printing (e.g. for testing without a printer)

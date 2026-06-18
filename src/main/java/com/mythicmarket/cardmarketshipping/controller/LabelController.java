@@ -1,7 +1,9 @@
 package com.mythicmarket.cardmarketshipping.controller;
 
+import com.mythicmarket.cardmarketshipping.config.PrinterConfig;
 import com.mythicmarket.cardmarketshipping.dto.LabelRequest;
 import com.mythicmarket.cardmarketshipping.service.PostNordService;
+import com.mythicmarket.cardmarketshipping.service.PrinterService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -17,10 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class LabelController {
 
     private final PostNordService postNordService;
+    private final PrinterConfig printerConfig;
+    private final PrinterService printerService;
 
     @PostMapping(value = "/generate", produces = "application/zpl")
     public ResponseEntity<byte[]> generate(@Valid @RequestBody LabelRequest request) {
         byte[] label = postNordService.generateLabel(request);
+
+        if (printerConfig.isEnabled()) {
+            printerService.print(label);
+        }
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
