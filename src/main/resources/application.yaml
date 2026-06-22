@@ -37,12 +37,13 @@ postnord:
     "[Priority Letter]": "Brev utrikes förstaklass"
     "[DHL Package size S]": "Rek"
     "[Priority Letter (1:a-klassbrev)]": "1:a-klass brev inrikes"
+    "[Home Small Prio]": "Spårbart Varubrev (Hemleverans)"
 
   serviceCodes:
     "[1:a-klass brev inrikes]":
       code: "UX"
       addon:
-    "[Varubrev Förstaklass]":
+    "[Home Small Prio]":
       code: "86"
       addon:
     "[Brev utrikes förstaklass]":
@@ -66,8 +67,5 @@ postnord:
     countryCode: "SE"
 
 printer:
-  name: ${PRINTER_NAME} # Windows printer name for USB (e.g. "ZDesigner ZD421-203dpi ZPL") — takes priority over host/port
-  host: ${PRINTER_HOST} # Network printer IP — used only if printer.name is not set
-  port: ${PRINTER_PORT}
+  name: ${PRINTER_NAME}
   enabled: ${PRINTER_ENABLED}
-  connect-timeout-ms: ${PRINTER_CONNECT_TIMEOUT_MS}
