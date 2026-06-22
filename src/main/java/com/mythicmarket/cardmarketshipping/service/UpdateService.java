@@ -51,6 +51,7 @@ public class UpdateService implements ApplicationRunner {
 
     @Override
     public void run(@NonNull ApplicationArguments args) {
+        cleanupUpdaterBat();
         if (!updateCheckEnabled) {
             return;
         }
@@ -62,6 +63,17 @@ public class UpdateService implements ApplicationRunner {
             checkForUpdate();
         } catch (Exception e) {
             log.warn("Update check failed: {}", e.getMessage());
+        }
+    }
+
+    private void cleanupUpdaterBat() {
+        Path appDir = resolveAppDir();
+        if (appDir == null) return;
+        Path bat = appDir.getParent().resolve("update.bat");
+        try {
+            Files.deleteIfExists(bat);
+        } catch (IOException e) {
+            log.debug("Could not delete updater bat: {}", e.getMessage());
         }
     }
 
@@ -188,10 +200,15 @@ public class UpdateService implements ApplicationRunner {
         Path batPath = appRoot.resolve("update.bat");
 
         String bat = "@echo off\r\n"
-                + "timeout /t 2 >nul\r\n"
+                + "timeout /t 5 >nul\r\n"
+                + ":retry\r\n"
                 + "move /y \"" + newJar.toAbsolutePath() + "\" \"" + currentJar.toAbsolutePath() + "\"\r\n"
+                + "if errorlevel 1 (\r\n"
+                + "  timeout /t 3 >nul\r\n"
+                + "  goto retry\r\n"
+                + ")\r\n"
                 + "start \"\" \"" + exePath.toAbsolutePath() + "\"\r\n"
-                + "del \"%~f0\"\r\n";
+                + "exit\r\n";
 
         Files.writeString(batPath, bat);
 
