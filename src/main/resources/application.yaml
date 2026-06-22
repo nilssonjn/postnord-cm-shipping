@@ -37,7 +37,7 @@ postnord:
     "[Priority Letter]": "Brev utrikes förstaklass"
     "[DHL Package size S]": "Rek"
     "[Priority Letter (1:a-klassbrev)]": "1:a-klass brev inrikes"
-    "[Home Small Prio]": "Spårbart Varubrev (Hemleverans)"
+    "[Spårbart Varubrev (Hemleverans)]": "Home Small Prio"
 
   serviceCodes:
     "[1:a-klass brev inrikes]":
