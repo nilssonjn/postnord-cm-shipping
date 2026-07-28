@@ -1,5 +1,6 @@
 package com.mythicmarket.cardmarketshipping.service.payload;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 public record EdiInstruction(
@@ -38,10 +39,14 @@ public record EdiInstruction(
     public record PartyIdentification(String partyId, String partyIdType) {
     }
 
-    public record PartyDetails(NameIdentification nameIdentification, Address address) {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public record PartyDetails(NameIdentification nameIdentification, List<Contact> contact, Address address) {
     }
 
     public record NameIdentification(String name) {
+    }
+
+    public record Contact(String name) {
     }
 
     public record Address(

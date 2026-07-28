@@ -27,6 +27,7 @@ public class PostNordPayloadBuilder {
                 new PartyIdentification(config.getCustomerNumber(), "160"),
                 new PartyDetails(
                         new NameIdentification(config.getSender().getName()),
+                        null,
                         new Address(
                                 List.of(config.getSender().getStreet()),
                                 config.getSender().getCity(),
@@ -38,6 +39,7 @@ public class PostNordPayloadBuilder {
         Consignee consignee = new Consignee(
                 new PartyDetails(
                         new NameIdentification(labelRequest.buyerName()),
+                        List.of(new Contact(labelRequest.buyerName())),
                         new Address(
                                 List.of(labelRequest.street()),
                                 labelRequest.city(),
