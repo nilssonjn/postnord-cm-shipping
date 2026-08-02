@@ -6,14 +6,20 @@ import com.mythicmarket.cardmarketshipping.service.payload.EdiInstruction;
 import com.mythicmarket.cardmarketshipping.service.payload.EdiInstruction.*;
 import com.mythicmarket.cardmarketshipping.util.CountryUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class PostNordPayloadBuilder {
+
+    // PostNord requires a consignee phone number for customs/VOEC purposes on these non-EU destinations
+    private static final Set<String> PHONE_REQUIRED_COUNTRY_CODES = Set.of("GB", "NO");
 
     private final PostNordConfig config;
 
@@ -21,12 +27,21 @@ public class PostNordPayloadBuilder {
         String isoCode = CountryUtil.toIsoCode(labelRequest.countryName());
         double weightKg = labelRequest.weightGrams() / 1000.0;
 
+        if (PHONE_REQUIRED_COUNTRY_CODES.contains(isoCode)
+                && (labelRequest.buyerPhone() == null || labelRequest.buyerPhone().isBlank())) {
+            log.warn("Missing buyer phone number for orderId={} shipping to {} — PostNord requires it for this destination",
+                    labelRequest.orderId(), labelRequest.countryName());
+            throw new IllegalArgumentException(
+                    "Buyer phone number is required for shipments to " + labelRequest.countryName());
+        }
+
         // SENDER
         Consignor consignor = new Consignor(
                 config.getIssuerCode(),
                 new PartyIdentification(config.getCustomerNumber(), "160"),
                 new PartyDetails(
                         new NameIdentification(config.getSender().getName()),
+                        null,
                         new Address(
                                 List.of(config.getSender().getStreet()),
                                 config.getSender().getCity(),
@@ -38,6 +53,7 @@ public class PostNordPayloadBuilder {
         Consignee consignee = new Consignee(
                 new PartyDetails(
                         new NameIdentification(labelRequest.buyerName()),
+                        new Contact(labelRequest.buyerName(), null, labelRequest.buyerPhone(), null),
                         new Address(
                                 List.of(labelRequest.street()),
                                 labelRequest.city(),
