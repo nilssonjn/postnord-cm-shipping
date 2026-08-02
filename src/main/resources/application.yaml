@@ -37,13 +37,13 @@ postnord:
     "[Priority Letter]": "Brev utrikes förstaklass"
     "[DHL Package size S]": "Rek"
     "[Priority Letter (1:a-klassbrev)]": "1:a-klass brev inrikes"
-    "[Spårbart Varubrev (Hemleverans)]": "Home Small Prio"
+    "[Spårbart Varubrev (Hemleverans)]": "PostNord Home Small Prio"
 
   serviceCodes:
     "[1:a-klass brev inrikes]":
       code: "UX"
       addon:
-    "[Home Small Prio]":
+    "[PostNord Home Small Prio]":
       code: "86"
       addon:
     "[Brev utrikes förstaklass]":
