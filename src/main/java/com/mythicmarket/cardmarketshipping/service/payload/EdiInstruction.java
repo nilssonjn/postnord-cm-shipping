@@ -40,13 +40,14 @@ public record EdiInstruction(
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public record PartyDetails(NameIdentification nameIdentification, List<Contact> contact, Address address) {
+    public record PartyDetails(NameIdentification nameIdentification, Contact contact, Address address) {
     }
 
     public record NameIdentification(String name) {
     }
 
-    public record Contact(String name) {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public record Contact(String contactName, String emailAddress, String phoneNo, String smsNo) {
     }
 
     public record Address(
