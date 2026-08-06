@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cardmarket → PostNord Label
 // @namespace    http://tampermonkey.net/
-// @version      1.4
+// @version      1.5
 // @match        https://www.cardmarket.com/*/Orders/*
 // @grant        GM_xmlhttpRequest
 // @connect      localhost
@@ -22,12 +22,16 @@
         if (!m) return null;
         const zip = m[1];
         const city = m[2];
-        const shippingDt = Array.from(document.querySelectorAll('dt'))
-            .find(el => el.textContent.trim() === 'Shipping Method:');
-        const rawService = shippingDt?.nextElementSibling
+        const shippingDd = Array.from(document.querySelectorAll('dt'))
+            .find(el => el.textContent.trim() === 'Shipping Method:')
+            ?.nextElementSibling;
+        const rawService = shippingDd
             ?.querySelector('span:not([data-bs-toggle]):not(.ms-1)')
             ?.textContent?.trim() ?? '';
-        const maxWeightMatch = rawService.match(/\(max\.\s*(\d+)g\)/);
+        // The "(max. Ng)" hint lives in its own sibling span (class "ms-1 text-muted"),
+        // not inside the service-name span above.
+        const rawWeightText = shippingDd?.querySelector('span.ms-1')?.textContent?.trim() ?? '';
+        const maxWeightMatch = rawWeightText.match(/\(max\.\s*(\d+)g\)/);
         const serviceType = rawService.replace(/\s*\(max\.\s*\d+g\)/, '').trim();
         const weightGrams = maxWeightMatch ? parseInt(maxWeightMatch[1], 10) : DEFAULT_WEIGHT_GRAMS;
         const orderId = window.location.pathname.match(/\/Orders\/(\d+)/)?.[1] ?? 'unknown';
