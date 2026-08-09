@@ -53,7 +53,7 @@ public class PostNordPayloadBuilder {
         Consignee consignee = new Consignee(
                 new PartyDetails(
                         new NameIdentification(labelRequest.buyerName()),
-                        new Contact(labelRequest.buyerName(), labelRequest.buyerEmail(), labelRequest.buyerPhone(), null),
+                        new Contact(labelRequest.buyerName(), null, labelRequest.buyerPhone(), null),
                         new Address(
                                 List.of(labelRequest.street()),
                                 labelRequest.city(),

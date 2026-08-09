@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Positive;
 public record LabelRequest(
         @NotBlank String buyerName,
         String buyerPhone,
-        String buyerEmail,
         @NotBlank String street,
         @NotBlank String postalCode,
         @NotBlank String city,
