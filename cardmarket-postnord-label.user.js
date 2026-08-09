@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cardmarket → PostNord Label
 // @namespace    http://tampermonkey.net/
-// @version      1.5
+// @version      1.6
 // @updateURL    https://raw.githubusercontent.com/nilssonjn/postnord-cm-shipping/main/cardmarket-postnord-label.user.js
 // @downloadURL  https://raw.githubusercontent.com/nilssonjn/postnord-cm-shipping/main/cardmarket-postnord-label.user.js
 // @match        https://www.cardmarket.com/*/Orders/*
@@ -50,10 +50,15 @@
             .find(el => el.textContent.trim() === 'Phone Number:');
         const rawPhone = phoneDt?.nextElementSibling?.textContent?.trim() ?? null;
         const buyerPhone = rawPhone ? rawPhone.replace(/^00(\d+)-0?/, '+$1') : null;
+        const emailDt = Array.from(document.querySelectorAll('dt'))
+            .find(el => el.textContent.trim() === 'Email:');
+        const buyerEmail = emailDt?.nextElementSibling
+            ?.querySelector('span:not([data-bs-toggle])')
+            ?.textContent?.trim() || null;
         return {
             buyerName: name, street, postalCode: zip, city,
             countryName: country, orderId, serviceType,
-            weightGrams, buyerPhone
+            weightGrams, buyerPhone, buyerEmail
         };
     }
 
