@@ -2,6 +2,8 @@
 // @name         Cardmarket → PostNord Label
 // @namespace    http://tampermonkey.net/
 // @version      1.5
+// @updateURL    https://raw.githubusercontent.com/nilssonjn/postnord-cm-shipping/main/cardmarket-postnord-label.user.js
+// @downloadURL  https://raw.githubusercontent.com/nilssonjn/postnord-cm-shipping/main/cardmarket-postnord-label.user.js
 // @match        https://www.cardmarket.com/*/Orders/*
 // @grant        GM_xmlhttpRequest
 // @connect      localhost
@@ -11,6 +13,15 @@
     const BACKEND_URL = 'http://localhost:8081/api/labels/generate';
     const DEFAULT_WEIGHT_GRAMS = 50; // fallback only, used if Cardmarket doesn't render a "(max. Ng)" hint
     const BUTTON_ID = 'postnord-label-btn';
+    // Postal code format per shipping country, matched against the combined
+    // "<zip> <city>" string Cardmarket renders in a single DOM node.
+    const ZIP_PATTERNS = {
+        'Sweden': /^(\d{3}\s?\d{2})\s+(.+)$/,
+        'Portugal': /^(\d{4}-\d{3})\s+(.+)$/,
+        'Poland': /^(\d{2}-\d{3})\s+(.+)$/,
+        'Netherlands': /^(\d{4}\s?[A-Za-z]{2})\s+(.+)$/,
+    };
+    const DEFAULT_ZIP_PATTERN = /^(\d{4,5})\s+(.+)$/;
 
     function extractAddress() {
         const name = document.querySelector('#ShippingAddress .Name')?.innerText.trim();
@@ -18,7 +29,7 @@
         const rawCity = document.querySelector('#ShippingAddress .City')?.innerText.trim();
         const country = document.querySelector('#ShippingAddress .Country')?.innerText.trim();
         if (!name || !street || !rawCity || !country) return null;
-        const m = rawCity.match(/^(\d{3}\s?\d{2}|\d{4})\s+(.+)$/);
+        const m = rawCity.match(ZIP_PATTERNS[country] ?? DEFAULT_ZIP_PATTERN);
         if (!m) return null;
         const zip = m[1];
         const city = m[2];
