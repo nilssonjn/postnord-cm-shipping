@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.mythicmarket</groupId>
     <artifactId>cardmarket-shipping</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
     <name>cardmarket-shipping</name>
     <description>cardmarket-shipping</description>
     <url/>
