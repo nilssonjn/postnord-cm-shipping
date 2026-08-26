@@ -8,6 +8,7 @@ public record LabelRequest(
         String buyerPhone,
         String buyerEmail,
         @NotBlank String street,
+        String optionalStreet,
         @NotBlank String postalCode,
         @NotBlank String city,
         @NotBlank String countryName,

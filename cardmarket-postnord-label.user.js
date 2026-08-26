@@ -20,11 +20,13 @@
         'Portugal': /^(\d{4}-\d{3})\s+(.+)$/,
         'Poland': /^(\d{2}-\d{3})\s+(.+)$/,
         'Netherlands': /^(\d{4}\s?[A-Za-z]{2})\s+(.+)$/,
+        'Ireland': /^([A-Za-z][A-Za-z0-9]{2}\s?[A-Za-z0-9]{4})\s+(.+)$/,
     };
     const DEFAULT_ZIP_PATTERN = /^(\d{4,5})\s+(.+)$/;
 
     function extractAddress() {
         const name = document.querySelector('#ShippingAddress .Name')?.innerText.trim();
+        const street2 = document.querySelector('#ShippingAddress .Extra')?.innerText.trim() || null;
         const street = document.querySelector('#ShippingAddress .Street')?.innerText.trim();
         const rawCity = document.querySelector('#ShippingAddress .City')?.innerText.trim();
         const country = document.querySelector('#ShippingAddress .Country')?.innerText.trim();
@@ -56,7 +58,7 @@
             ?.querySelector('span:not([data-bs-toggle])')
             ?.textContent?.trim() || null;
         return {
-            buyerName: name, street, postalCode: zip, city,
+            buyerName: name, street, street2, postalCode: zip, city,
             countryName: country, orderId, serviceType,
             weightGrams, buyerPhone, buyerEmail
         };
