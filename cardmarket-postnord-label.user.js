@@ -20,6 +20,7 @@
         'Portugal': /^(\d{4}-\d{3})\s+(.+)$/,
         'Poland': /^(\d{2}-\d{3})\s+(.+)$/,
         'Netherlands': /^(\d{4}\s?[A-Za-z]{2})\s+(.+)$/,
+        'Ireland': /^([A-Za-z][A-Za-z0-9]{2}\s?[A-Za-z0-9]{4})\s+(.+)$/,
     };
     const DEFAULT_ZIP_PATTERN = /^(\d{4,5})\s+(.+)$/;
 
