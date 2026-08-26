@@ -26,6 +26,7 @@
 
     function extractAddress() {
         const name = document.querySelector('#ShippingAddress .Name')?.innerText.trim();
+        const street2 = document.querySelector('#ShippingAddress .Extra')?.innerText.trim() || null;
         const street = document.querySelector('#ShippingAddress .Street')?.innerText.trim();
         const rawCity = document.querySelector('#ShippingAddress .City')?.innerText.trim();
         const country = document.querySelector('#ShippingAddress .Country')?.innerText.trim();
@@ -57,7 +58,7 @@
             ?.querySelector('span:not([data-bs-toggle])')
             ?.textContent?.trim() || null;
         return {
-            buyerName: name, street, postalCode: zip, city,
+            buyerName: name, street, street2, postalCode: zip, city,
             countryName: country, orderId, serviceType,
             weightGrams, buyerPhone, buyerEmail
         };

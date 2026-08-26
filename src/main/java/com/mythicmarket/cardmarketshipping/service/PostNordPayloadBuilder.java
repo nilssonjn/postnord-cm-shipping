@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
@@ -55,7 +56,9 @@ public class PostNordPayloadBuilder {
                         new NameIdentification(labelRequest.buyerName()),
                         new Contact(labelRequest.buyerName(), labelRequest.buyerEmail(), labelRequest.buyerPhone(), null),
                         new Address(
-                                List.of(labelRequest.street()),
+                                Stream.of(labelRequest.street(), labelRequest.optionalStreet())
+                                        .filter(s -> s != null && !s.isBlank())
+                                        .toList(),
                                 labelRequest.city(),
                                 labelRequest.postalCode(),
                                 isoCode)
