@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cardmarket → PostNord Label
 // @namespace    http://tampermonkey.net/
-// @version      1.6
+// @version      1.7
 // @updateURL    https://raw.githubusercontent.com/nilssonjn/postnord-cm-shipping/main/cardmarket-postnord-label.user.js
 // @downloadURL  https://raw.githubusercontent.com/nilssonjn/postnord-cm-shipping/main/cardmarket-postnord-label.user.js
 // @match        https://www.cardmarket.com/*/Orders/*
