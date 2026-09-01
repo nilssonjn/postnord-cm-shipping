@@ -33,15 +33,21 @@ public class PostNordConfig {
     @PostConstruct
     public void buildServiceLookup() {
         serviceLookup = new HashMap<>();
-        if (serviceCodes != null) {
-            serviceCodes.forEach((code, entry) -> {
-                if (entry.getAliases() != null) {
-                    for (String alias : entry.getAliases()) {
-                        serviceLookup.put(alias, new ServiceEntry(code, entry.getAddon()));
-                    }
-                }
-            });
+        if (serviceCodes == null || serviceCodes.isEmpty()) {
+            log.warn("Missing config: postnord.service-codes — no service types will resolve");
+            return;
         }
+
+        serviceCodes.forEach((code, entry) -> {
+            if (entry.getAliases() == null || entry.getAliases().isEmpty()) {
+                log.warn("Service code '{}' has no aliases configured and can never be resolved", code);
+                return;
+            }
+            for (String alias : entry.getAliases()) {
+                serviceLookup.put(alias, new ServiceEntry(code, entry.getAddon()));
+            }
+        });
+
     }
 
     public ServiceEntry resolveService(String rawServiceType) {

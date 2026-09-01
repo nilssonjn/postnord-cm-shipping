@@ -32,24 +32,23 @@ postnord:
   urlParams: ${POSTNORD_URL_PARAMS}
 
   serviceCodes:
-    UX:
+    UX: # 1:a-klass brev inrikes, Brev utrikes förstaklass
       addon:
       aliases:
         - "Priority Letter"
         - "Priority Letter (1:a-klassbrev)"
-    "86":
+    "86": # PostNord Home Small Prio
       addon:
       aliases:
         - "Spårbart Varubrev (Hemleverans)"
-    RR:
+    RR: # Rek
       addon:
       aliases:
         - "DHL Package size S"
-    "34":
+    "34": # Tracked Letter
       addon:
       aliases:
         - "International Registered Letter (Online)"
-        - "[Tracked Letter]"
 
   defaultPackageType: "EN" # PostNord package type code EN = envelope/letter
   testMode: ${POSTNORD_TEST_MODE} # set to false for production
