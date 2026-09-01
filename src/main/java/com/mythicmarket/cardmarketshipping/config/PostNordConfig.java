@@ -7,6 +7,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -23,9 +25,34 @@ public class PostNordConfig {
     private String defaultPackageType;
     private String url;
     private String urlParams;
-    private Map<String, String> aliases;
-    private Map<String, ServiceEntry> serviceCodes;
+    private Map<String, ServiceCodeEntry> serviceCodes;
     private Application application;
+
+    private Map<String, ServiceEntry> serviceLookup;
+
+    @PostConstruct
+    public void buildServiceLookup() {
+        serviceLookup = new HashMap<>();
+        if (serviceCodes == null || serviceCodes.isEmpty()) {
+            log.warn("Missing config: postnord.service-codes — no service types will resolve");
+            return;
+        }
+
+        serviceCodes.forEach((code, entry) -> {
+            if (entry.getAliases() == null || entry.getAliases().isEmpty()) {
+                log.warn("Service code '{}' has no aliases configured and can never be resolved", code);
+                return;
+            }
+            for (String alias : entry.getAliases()) {
+                serviceLookup.put(alias, new ServiceEntry(code, entry.getAddon()));
+            }
+        });
+
+    }
+
+    public ServiceEntry resolveService(String rawServiceType) {
+        return serviceLookup.get(rawServiceType);
+    }
 
     @PostConstruct
     public void validateEnv() {
@@ -62,9 +89,15 @@ public class PostNordConfig {
     }
 
     @Data
-    public static class ServiceEntry {
-        private String code;
+    public static class ServiceCodeEntry {
         private String addon;
+        private List<String> aliases;
+    }
+
+    @Data
+    public static class ServiceEntry {
+        private final String code;
+        private final String addon;
     }
 
     @Data

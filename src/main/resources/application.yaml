@@ -31,32 +31,26 @@ postnord:
   url: ${POSTNORD_URL}
   urlParams: ${POSTNORD_URL_PARAMS}
 
-  # Maps incoming service type names (e.g. from Cardmarket) to canonical serviceCodes keys.
-  # Add new entries here as you encounter unrecognised service type names in the logs.
-  aliases:
-    "[Priority Letter]": "Brev utrikes förstaklass"
-    "[DHL Package size S]": "Rek"
-    "[Priority Letter (1:a-klassbrev)]": "1:a-klass brev inrikes"
-    "[Spårbart Varubrev (Hemleverans)]": "PostNord Home Small Prio"
-
   serviceCodes:
-    "[1:a-klass brev inrikes]":
-      code: "UX"
+    UX: # 1:a-klass brev inrikes, Brev utrikes förstaklass
       addon:
-    "[PostNord Home Small Prio]":
-      code: "86"
+      aliases:
+        - "Priority Letter"
+        - "Priority Letter (1:a-klassbrev)"
+    "86": # PostNord Home Small Prio
       addon:
-    "[Brev utrikes förstaklass]":
-      code: "UX"
+      aliases:
+        - "Spårbart Varubrev (Hemleverans)"
+    RR: # Rek
       addon:
-    "[Tracked Letter]":
-      code: "34"
+      aliases:
+        - "DHL Package size S"
+    "34": # Tracked Letter
       addon:
-    "[Rek]":
-      code: "RR"
-      addon:
+      aliases:
+        - "International Registered Letter (Online)"
 
-  defaultPackageType: EN # PostNord package type code EN = envelope/letter
+  defaultPackageType: "EN" # PostNord package type code EN = envelope/letter
   testMode: ${POSTNORD_TEST_MODE} # set to false for production
 
   sender:
