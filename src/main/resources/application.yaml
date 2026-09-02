@@ -49,6 +49,7 @@ postnord:
       addon:
       aliases:
         - "International Registered Letter (Online)"
+        - "Tracked Letter"
 
   defaultPackageType: "EN" # PostNord package type code EN = envelope/letter
   testMode: ${POSTNORD_TEST_MODE} # set to false for production

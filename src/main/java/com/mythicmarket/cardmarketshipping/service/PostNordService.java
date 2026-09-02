@@ -53,7 +53,7 @@ public class PostNordService {
         }
 
         String labelData = extractBase64Label(response);
-        log.info("Label generated successfully for orderId={}", labelRequest.orderId());
+        log.info("Label generated successfully for orderId={}, serviceType={}", labelRequest.orderId(), labelRequest.serviceType());
         return labelData.getBytes(StandardCharsets.UTF_8);
     }
 
