@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cardmarket → PostNord Label
 // @namespace    http://tampermonkey.net/
-// @version      1.7
+// @version      1.8
 // @updateURL    https://raw.githubusercontent.com/nilssonjn/postnord-cm-shipping/main/cardmarket-postnord-label.user.js
 // @downloadURL  https://raw.githubusercontent.com/nilssonjn/postnord-cm-shipping/main/cardmarket-postnord-label.user.js
 // @match        https://www.cardmarket.com/*/Orders/*
@@ -21,8 +21,15 @@
         'Poland': /^(\d{2}-\d{3})\s+(.+)$/,
         'Netherlands': /^(\d{4}\s?[A-Za-z]{2})\s+(.+)$/,
         'Ireland': /^([A-Za-z][A-Za-z0-9]{2}\s?[A-Za-z0-9]{4})\s+(.+)$/,
+        'Latvia': /^(LV-?\d{4})\s+(.+)$/i,
+        'Lithuania': /^(LT-?\d{5})\s+(.+)$/i,
+        'Estonia': /^(\d{5})\s+(.+)$/,
     };
-    const DEFAULT_ZIP_PATTERN = /^(\d{4,5})\s+(.+)$/;
+    // Covers most European formats not listed above: an optional 1-2 letter
+    // prefix, optional dash, 3-5 digits, optional 1-2 letter suffix, with no
+    // internal space (countries whose code contains a space, e.g. Sweden,
+    // Netherlands, need their own explicit entry above).
+    const DEFAULT_ZIP_PATTERN = /^([A-Za-z]{0,2}-?\d{3,5}[A-Za-z]{0,2})\s+(.+)$/;
 
     function extractAddress() {
         const name = document.querySelector('#ShippingAddress .Name')?.innerText.trim();
@@ -30,9 +37,14 @@
         const street = document.querySelector('#ShippingAddress .Street')?.innerText.trim();
         const rawCity = document.querySelector('#ShippingAddress .City')?.innerText.trim();
         const country = document.querySelector('#ShippingAddress .Country')?.innerText.trim();
-        if (!name || !street || !rawCity || !country) return null;
+        if (!name || !street || !rawCity || !country) {
+            throw new Error('Missing name/street/city/country on page. Is this an order page?');
+        }
         const m = rawCity.match(ZIP_PATTERNS[country] ?? DEFAULT_ZIP_PATTERN);
-        if (!m) return null;
+        if (!m) {
+            console.warn(`[postnord-label] No postal code pattern matched for country "${country}", city field "${rawCity}". Add an entry to ZIP_PATTERNS or widen DEFAULT_ZIP_PATTERN.`);
+            throw new Error(`Could not parse postal code/city from "${rawCity}" (country: ${country}). See browser console for details.`);
+        }
         const zip = m[1];
         const city = m[2];
         const shippingDd = Array.from(document.querySelectorAll('dt'))
@@ -95,9 +107,12 @@
             display: block;
         `;
         btn.onclick = () => {
-            const data = extractAddress();
-            if (!data) {
-                alert('Could not extract shipping address. Is this an order page?');
+            let data;
+            try {
+                data = extractAddress();
+            } catch (err) {
+                console.error('[postnord-label]', err);
+                alert(err.message);
                 return;
             }
             setButtonState(btn, 'loading');
